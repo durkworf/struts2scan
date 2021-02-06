@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+
+<AnchorPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="struts2scan.controller.Controller">
+   <children>
+      <Button fx:id="checkButton" layoutX="662.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#runVulTest" prefWidth="100.0" text="检测" />
+      <Label layoutX="43.0" layoutY="45.0" text="URL：" />
+      <TextField fx:id="url" layoutX="109.0" layoutY="40.0" prefHeight="30.0" prefWidth="381.0" />
+      <TextArea fx:id="output" layoutX="41.0" layoutY="96.0" prefHeight="585.0" prefWidth="725.0" promptText="使用小贴士，补全url，带上.action或者.do"/>
+      <ComboBox fx:id="combobox" layoutX="496.0" layoutY="40.0" prefWidth="150.0" value="ALL">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="ALL" />
+               <String fx:value="S2_001"/>
+               <String fx:value="S2_003"/>
+            </FXCollections>
+         </items>
+      </ComboBox>
+   </children>
+</AnchorPane>
