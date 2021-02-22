@@ -13,13 +13,35 @@
       <Button fx:id="checkButton" layoutX="662.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#runVulTest" prefWidth="100.0" text="检测" />
       <Label layoutX="43.0" layoutY="45.0" text="URL：" />
       <TextField fx:id="url" layoutX="109.0" layoutY="40.0" prefHeight="30.0" prefWidth="381.0" />
-      <TextArea fx:id="output" layoutX="41.0" layoutY="96.0" prefHeight="585.0" prefWidth="725.0" promptText="使用小贴士，补全url，带上.action或者.do"/>
+      <TextArea fx:id="output" layoutX="41.0" layoutY="96.0" prefHeight="585.0" prefWidth="725.0" promptText="使用小贴士:补全url，带上.action或者.do&#xD;所有payload都是默认漏洞环境下的，所以实际环境可能需要调整&#xD;不建议使用ALL检测所有，检测不准确"/>
       <ComboBox fx:id="combobox" layoutX="496.0" layoutY="40.0" prefWidth="150.0" value="ALL">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="ALL" />
                <String fx:value="S2_001"/>
                <String fx:value="S2_003"/>
+               <String fx:value="S2_005"/>
+               <String fx:value="S2_007"/>
+               <String fx:value="S2_008"/>
+               <String fx:value="S2_009"/>
+               <String fx:value="S2_012"/>
+               <String fx:value="S2_013/14"/>
+               <String fx:value="S2_015"/>
+               <String fx:value="S2_016"/>
+               <String fx:value="S2_019"/>
+               <String fx:value="S2_029"/>
+               <String fx:value="S2_032"/>
+               <String fx:value="S2_033"/>
+               <String fx:value="S2_037"/>
+               <String fx:value="S2_045"/>
+               <String fx:value="S2_046"/>
+               <String fx:value="S2_048"/>
+               <String fx:value="S2_052"/>
+               <String fx:value="S2_053"/>
+               <String fx:value="S2_devMode"/>
+               <String fx:value="S2_057"/>
+               <String fx:value="S2_059"/>
+               <String fx:value="S2_061"/>
             </FXCollections>
          </items>
       </ComboBox>

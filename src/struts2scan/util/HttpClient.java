@@ -35,19 +35,19 @@ public class HttpClient {
             return true;
         }
     };
-    public static struts2scan.util.HttpResult get(String url) throws Exception {
+    public static HttpResult get(String url) throws Exception {
         return get(url,null);
     }
-    public static struts2scan.util.HttpResult get(String url, Map<String, String> headers) throws Exception {
+    public static HttpResult get(String url, Map<String, String> headers) throws Exception {
         return httpRequest(url, GET,null, headers);
     }
 
-    public static struts2scan.util.HttpResult post(String url, Map<String,String> data) throws Exception {
+    public static HttpResult post(String url, Map<String,String> data) throws Exception {
         Map<String, String> headers=new HashMap<String, String>();
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         return post(url, data, headers);
     }
-    public static struts2scan.util.HttpResult post(String url, Map<String,String> data, Map<String, String> headers) throws Exception {
+    public static HttpResult post(String url, Map<String,String> data, Map<String, String> headers) throws Exception {
         StringBuilder sb=new StringBuilder();
         for(String name:data.keySet()){
             String value=data.get(name);
@@ -59,13 +59,13 @@ public class HttpClient {
         }
         return httpRequest(url, POST,sb.toString().getBytes(), headers);
     }
-    public static struts2scan.util.HttpResult post(String url, byte[] data, Map<String, String> headers) throws Exception {
+    public static HttpResult post(String url, byte[] data, Map<String, String> headers) throws Exception {
         return httpRequest(url, POST,data, headers);
     }
-    public static struts2scan.util.HttpResult post(String url, byte[] data) throws Exception {
+    public static HttpResult post(String url, byte[] data) throws Exception {
         return httpRequest(url, POST,data, null);
     }
-    private static struts2scan.util.HttpResult httpRequest(String url, String method, byte[] data, Map<String, String> headers) throws Exception {
+    private static HttpResult httpRequest(String url,String method, byte[] data, Map<String, String> headers) throws Exception {
         URL u = new URL(url);
         HttpURLConnection con =null;
         if(url.toLowerCase().startsWith("https")){
@@ -96,21 +96,34 @@ public class HttpClient {
             out.flush();
             out.close();
         }
-        struts2scan.util.HttpResult result=null;
+        HttpResult result=null;
         InputStream in = con.getInputStream();
         if (in != null) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder sb = new StringBuilder();
             String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+
+            int BUFFER_SIZE=1024;
+            char[] buffer = new char[BUFFER_SIZE];
+
+            int charsRead = 0;
+            String text="";
+            try {
+                while ((charsRead  = reader.read(buffer, 0, BUFFER_SIZE)) != -1) {
+                    sb.append(buffer,0, charsRead);
+                    text = sb.toString();
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
+
             int code = con.getResponseCode();
-            String text = sb.toString();
+
             Map<String, List<String>> responseHeaders = con.getHeaderFields();
             reader.close();
-            result=new struts2scan.util.HttpResult(code, text, responseHeaders);
+            result=new HttpResult(code, text, responseHeaders);
         }
+
         con.disconnect();
         return result;
     }
